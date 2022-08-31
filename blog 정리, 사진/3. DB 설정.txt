@@ -49,15 +49,29 @@
  (.properties 파일의 경우에는 .을 기준으로 여러 설정을 할 수 있지만, .yml은 :와 들여쓰기를 사용하여 편의성 부분이 훨씬 좋다.(중복되는 코드 감소))
 
  application.yml에
+
     spring:
         datasource:
-            driver-class-name: com.mysql.cj.jdbc.Driver
-            url: jdbc:mysql://localhost:3306/blog?serverTimezone=Asia/Seoul
+            driver-class-name: org.mariadb.jdbc.Driver                                    (mysql의 경우는 com.mysql.cj.jdbc.Driver)
+            url: jdbc:mariadb://localhost:3306/blog?serverTimezone=Asia/Seoul             (mysql의 경우는 jdbc:mysql://localhost:3306/blog?serverTimezone=Asia/Seoul)
             username: cos
             password: cos1234
+
  코드 작성.(사진 7번)
 
  하지만 spring을 실행하면 사진 8번과 같은 에러가 뜨며 서버에 연결되지 않았다.
 
  아마 참고 영상에서는 mysql을 사용하지만 나는 mariadb를 사용하면서 처음 설정부터 문제가 생긴 것 같다.(구글링으로 문제를 해결하려 했지만 spring boot에서 mariadb를 사용하기 위해서는 build.gradle에 코드를 추가해야하는데 나에게는 build.gradle 파일이 보이지 않는다.)
-        
+
+ 찾아보니 처음 spring boot project를 설정할 때, gradle 혹은 maven 을 선택하는 것이었는데 나는 maven을 선택했기 때문에 build.gradle 파일이 없던 것이다.
+ 즉, maven을 선택하고 mariadb를 사용하기 위해서는 pom.xml 파일에서 사진 10번과 같이 코드를 작성하여 mariadb 사용을 선언해야한다.
+ (여기서 사진 9번과 같이 이미 포트를 사용하고 있다는 에러가 발생할 수 있는데 이것은 파일을 수정하고 저장하였을때 자동으로 새로고침(1. 의존성 설정에서 Spring Boot DevTools 부분))이 되는데
+ 이것을 무시하고 다시 Spring Boot App을 실행하면 뜨는 에러이다.)
+
+
+ (# 참고로 gradle을 설정했을 경우 mariadb를 사용하기 위해서는 build.gradle에
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client' // MariaDB)
+
+    코드를 작성하면 된다.)
