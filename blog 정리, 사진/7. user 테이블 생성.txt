@@ -7,7 +7,7 @@
 
 
         또한, application.yml의 jpa 부분에서 use-new-id-generator-mappings: false처럼 false를 사용하면 jpa가 사용하는 기본 넘버링 전략을 따라가지 않는다는 말이다.
-        즋, jpa 기본 넘버링을 사용하는 것이 아닌 @GeneratedValue(strategy = GenerationType.IDENTITY)를 사용해 프로젝트에 연결된 DB 넘버링 전략을 따라간는 뜻이다.
+        즉, jpa 기본 넘버링을 사용하는 것이 아닌 @GeneratedValue(strategy = GenerationType.IDENTITY)를 사용해 프로젝트에 연결된 DB 넘버링 전략을 따라간는 뜻이다.
 
         @Column(nullable = false, length = 30)의 경우는 null 값을 받을 수 없고, 길이는 30을 넘지지 못한다.
         password의 경우는 length를 100으로 준 이유는 나중에 해쉬로 암호화하기 위해서
