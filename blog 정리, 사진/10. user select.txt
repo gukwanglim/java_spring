@@ -1,0 +1,32 @@
+1. User table에 있는 내용을 select하여 들고 오기 위해서는 사진 1번과 같이 해야한다.
+    DummycontrollerTest.java에 들어가 
+        이때 주소에 {id}를 사용하면 id의 값을 주소로 불러올 수 있다.(id가 3일 경우 -> {id}는 3을 반환하여 http://localhost:8000/blog/dummy/user/3와 같이 된다.)
+        이렇게 주소를 연결했으면 detail(PathVariable int id)를 이용한다.(타입을 int로 잡았으며, id는 주소에 적혀있는 {id}를 이용한다.)
+
+        UserRepositroy.findById(id)에서  findById()는 타입이 Optional이다.(사진 2번)
+            그 이유는 만약, User table에 없는 id를 찾아올게 되면 null이 된다. 즉, null을 return하는 것으로 에러가 발생하게 된다.
+            이런 문제를 예방하기 위해서 Optional로 User 객체를 감싸서 가져오게 되고, 이것을 null인지 아닌지 판단하여 return하게 된다.
+            
+            이와 같은 Optional에는 여러 함수를 가지고 있다.
+                UserRepositroy.findById(id).get() : User 객체를 바로 뽑아서 사용.(null이 존재하지 않을 것이라는 가정)
+                UserRepositroy.findById(id).orElseGet(null) : User 객체가 null일 경우, 그 안에 데이터를 넣어서 사용. 이때, orElseGet()의 () 안에 사용되는 타입은 Supplier으로 
+                    new Supplier<User>과 같은 방식으로 익명 개체를 사용해야한다.(Supplier는 인터페이스(인터페이스를 new 하기 위해서는 익명 클래스를 만들어야한다.)이다. 사진 3번)
+                    이렇게 익명 클래스로 new를 만들어면서 Supplier에 존재하는 get 메소드를 overriding하여 사용하면 객체 생성이 가능하다.
+
+                serRepositroy.findById(id).orElseGet()을 사용하게 되면 id에 null 값이 아닌 정상적인 int가 들어오게 된다면 orElseGet()가 작동하지 않는다.
+                대신 id에 null값이 들어오게 된다면 orElseGet(new Supplier<User>() {})로 인해 overriding된 get이 동작하며 비어있는 new User 객체를 넣어주게 된다.
+
+            orElseGet()을 사용하는 방식보다 더 선호되는 방식이 있는데 그것은 findById()의 IllegalArgumentException를 사용하는 것이다.(사진 4, 5번)
+                IllegalArgumentException는 잘못된 int가 들어갔을 경우 작동하는 것으로 findById(id)에 들어가는 id의 int값이 데이터 베이스에 존재하지 않을 경우 동작한다.
+                사용 방법은 위의 Supplier과 비슷하며 orElseGet() 대신에 orElseThrow()를 사용하고, new Supplier<IllegalArgumentException>() {}를 작성하면 된다.
+
+        코드가 제대로 작동하는지 알아보기 위해 브라우저에 띄워보면 사진 6번과 같이 데이터 베이스에 존재하는 id를 가져왔을 경우 select된 것을 확인할 수 있다.
+        반면, 데이터 베이스에 존재하지 않는 id를 가지고 찾아보면 사진 7번과 같이 에러 메시지가 나오며 코드에 작성한 내용이 출력되는 것을 확인할 수 있다.
+            참고로 주석처리 했던 UserRepositroy.findById(id).orElseGet(new Supplier<User>() {}) 방식을 사용하게 되면 사진 8번과 같이 null값이 반환되는 것을 볼 수 있다.
+            또한, 사진 9번과 같이 orElseThrow()를 람다식으로 사용하는 방법도 있다.
+
+    추가적으로 html 파일이 아니라 data를 return 해주는 Controller는 현재 DummycontrollerTest.java에서 사용 중인 @RestController이다.
+        이때 요청은 웹브라우저에서 실행되며, user 객체는 java object가 된다.
+        즉, user 객체가 요청되기 위해서(웹브라우저는 html 파일이 아니면 읽어들이지 못한다.) json 파일로 변환을 해야한다.
+            원래라면 이러한 변환 과정을 Gson과 같은 라이브러리를 이용해야하지만, 스프링 부트에는 MessageConverter가 Jackson 라이브러리를 호출해 자동으로 user 오브젝트를 json으로 변환하여 브라우저에 던져준다.
+            이런 과정이 동작하기 때문에 브라우저에 띄우면 json형식으로 select 된 것을 확인할 수 있다.(사진 10번)
