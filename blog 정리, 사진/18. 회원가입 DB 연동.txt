@@ -1,0 +1,26 @@
+1. com.cos.blog 아래 service 패키지와 UserService 클래스 생성(사진 1번)
+    @Service의 경우 spring이 컴포넌트 스캔을 통해서 Bean에 등록을 해준다.(IoC를 해준다.)
+
+    사진 2번
+    서비스가 필요한 이유
+        1-1. 트랜잭션을 관리하기 위해서(뒤에서 자세히 설명)
+        1-2. 서비스라는 의미 때문에 
+            간단한 예시를 들어 설명하자면
+                5만원을 가지고 있는 A가 2만원을 가지고 있는 B에게 3만원을 송금할 경우,
+                A는 5만원에서 3만원을 뺀 금액만큼 update()를 해야한다.(update를 한다는 것은 commit이 되야한다는 뜻이다.) 
+                B는 2만원에서 3만원을 더한 금액만큼 update()를 해야한다.
+
+                이와 같이 두 개 이상의 로직이 묶인 상태로 하나의 서비스가 이뤄지는 경우가 존재한다.(이때 하나의 로직을 트랜잭션이라고 부른다.)
+                즉, 둘 이상의 로직 중에 하나라도 오류가 발생한다면 다시 rollback을 해야하는 것이다.
+
+                현재 작성되어 있는 코드에서 보자면 try 구문의 userRepositroy.save(user); 부분이 여러 개로 늘어날 수 있다는 말이다.(때문에 @Transactional 사용)
+                    만약, 여러 개의 트랜잭션이 존재한다면
+                        모든 트랜잭션에 문제가 없을 때는 commit을 진행하고, 
+                        문제가 발생한다면 rollback을 진행하는데 rollback에 대한 코드를 작성해줘야 한다.(현재 프로젝트에서는 하나의 트랜젝션만 가지고 있기에 간단하게 넘어감)
+
+    이렇게 만든 service는 UserService.java에서 private UserService userService;로 불러 사용하면 되며 받아온 user를 그대로 int result = userService.회원가입(user);에 사용하여
+    return에 result로 넣는다.(UserService.java에서 문제가 없으면 1을, 오류가 발생하면 -1을 return하도록 되어 있음)(사진 3번)
+
+    추가로 현재 user에 담긴 내용은 총 3개(username, password, email)로 자동으로 기입되는 id, cerateDate와 달리 role은 자동생성되지 않으므로 직접 넣어준다.
+
+    이제 기존 데이터 베이스에 저장된 데이터(사진 4번)을 확인하고 회원가입 진행 후 데이터를 확인해보면 사진 5번과 같이 추가되어 있음을 확인할 수 있다.
