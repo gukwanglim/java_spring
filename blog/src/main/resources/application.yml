@@ -1,7 +1,7 @@
 server:
   port: 8000
   servlet:
-    context-path: /blog
+    context-path: /     # 스프링 시큐리티를 위해 /blog가 아닌 / 사용
     encoding:
       charset: UTF-8
       enabled: true

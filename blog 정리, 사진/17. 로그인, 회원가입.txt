@@ -94,6 +94,12 @@
         다만, HttpStatus의 데이터 타입은 enum으로(사진 27번) 사진 28번과 같이 ResponseDto.java에서 status의 데이터 타입을 HttpStatus로 선언해줘야 한다.
 
         이렇게하면 사진 29번과 같이 ok값을 받아올 수 있다.(오브젝트의 형태)
+        
+        하지만 회원가입이 제대로 동작했기 때문에 1을 받아한다고 예측을 했었다.(현재는 GlobalExceptionHandler가 return 되는 것이다.)
+        때문에 사진 30, 31, 32, 33번과 같이 수정.(이전에 현재 User table의 username 값이 unique가 아니기 때문에 사진 34번과 같이 User를 수정)
+
+        이제 postman에서 새로운 회원가입을 시도했을 경우 사진 35번과 같이 나오는 것을 확인할 수 있고, 같은 내용으로 회원가입을 시도하면 사진 36번과 같이 나오는 것을 확인할 수 있다.
+        (하지만 이 부분은 아직 이해하기 힘든 부분이 있음(https://www.youtube.com/watch?v=f5zHFb1BHmY&list=PL93mKxaRDidECgjOBjPgI3Dyo8ka6Ilqm&index=48))
 
     (위에서 ajax는 dataType: "json"로 받아와야 javascript 오브젝트로 변경해준다고 하였지만, 이 코드를 지우고 사용해도 javascript 오브젝트로 반환하는 것을 확인)
     

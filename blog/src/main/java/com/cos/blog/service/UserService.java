@@ -1,9 +1,8 @@
 package com.cos.blog.service;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cos.blog.model.User;
 import com.cos.blog.repositroy.UserRepositroy;
@@ -16,14 +15,12 @@ public class UserService {
 	private UserRepositroy userRepositroy;
 	
 	@Transactional
-	public int 회원가입(User user) {
-		try {
-			userRepositroy.save(user);
-			return 1;
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("UserService : 회원가입() : " + e.getMessage());
-		}
-		return -1;
+	public void 회원가입(User user) {
+		userRepositroy.save(user);
+	}
+	
+	@Transactional(readOnly = true) // select 할 때 트랜젝션 시작, 서비스 종료 시에 트랜젝션 종료(정합성) 
+	public User 로그인(User user) {
+		return userRepositroy.findByUsernameAndPassword(user.getUsername(), user.getPassword());
 	}
 }
