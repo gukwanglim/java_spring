@@ -5,7 +5,7 @@
 
     이런 식으로 주소를 변경하는 이유는 권한 때문이다.(자세한 이유는 나중에 설명)
 
-2. 스프링 시큐리티를 사용하기 위해서 pom.xml에 spring-security-taglibs를 작성.(시큐리티 태그 라이브러리, 그리 중요한 내용은 아님)
+2. 스프링 시큐리티를 사용하기 위해서 pom.xml에 spring-security-taglibs를 작성.(사진 4번, 시큐리티 태그 라이브러리, 그리 중요한 내용은 아님)
     대신 사진 5번의 spring-boot-starter-security는 시큐리티를 사용하기 위해 필수로 작성해야한다.
 
 3. 스프링 시큐리티를 사용하기 위해 UserApiController.java의 login 부분 주석처리(사진 6번)

@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cos.blog.dto.ResponseDto;
-import com.cos.blog.model.RoleType;
-//import com.cos.blog.model.RoleType;
 import com.cos.blog.model.User;
 import com.cos.blog.service.UserService;
 
@@ -24,12 +22,9 @@ public class UserApiController {
 //	@Autowired
 //	private HttpSession session;
 	
-//	@PostMapping("/api/user")
-	// 스프링 시큐리티 사용(경로에 api/user 대신 auth/joinProc)
 	@PostMapping("/auth/joinProc")
 	public ResponseDto<Integer> save(@RequestBody User user) { // json이므로 @RequestBody 사용
 		System.out.println("UserApiController : sava");
-		user.setRole(RoleType.USER);
 		userService.회원가입(user);
 		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
 	}

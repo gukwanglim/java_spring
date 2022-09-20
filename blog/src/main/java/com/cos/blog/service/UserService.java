@@ -21,7 +21,7 @@ public class UserService {
 	
 	@Transactional
 	public void 회원가입(User user) {
-		String rawPassword = user.getPassword();  // 1234 원문
+		String rawPassword = user.getPassword();  // 1234 원본
 		String encPassword = encoder.encode(rawPassword);  // 해쉬
 		user.setPassword(encPassword);
 		user.setRole(RoleType.USER);
