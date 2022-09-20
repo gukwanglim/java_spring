@@ -19,3 +19,34 @@
 
 4. 위 과정을 거쳐도 bean을 생성하지 못하는 오류를 바로잡지 못해 이전 버전으로 돌아감.(깃허브에 올려 놓은 가장 최근 버전이 20. 스프링 시큐리티(test)부분)
     (해쉬 과정까지 마치고 깃허브에 업로드.)
+
+5. - 스프링 시큐리티(로그인)에서 1번 과정을 진행.
+
+    이곳의 전체 코드의 동작에 대해 설명하자면 
+        - 인증이 되지 않는 어떠한 요청은 전부 .loginPage("/auth/loginForm")로 인해 /auth/loginForm으로 이동한다.
+            (여기서 인증이 필요한 요청 = .antMatchers("/", "/auth/**", "/js/**", "/css/**", "/image/**") 부분)
+        - 로그인을 수행하게 되면 .loginProcessingUrl("/auth/loginProc")으로 인해 /auth/loginProc으로 오는 요청을 스프링 시큐리티가 가로채서 대신 로그인한다.
+        - 마지막으로 로그인이 완료되면 .defaultSuccessUrl("/");을 통해 / 페이지로 이동한다.
+        - 추가로 .failureUrl("/fail");를 사용하게 되면 로그인이 실패했을 경우 /fail으로 이동한다.
+
+    - 스프링 시큐리티(로그인)에서 2번 과정을 진행.
+        - PrincipalDetail.java 작성.
+
+    - 스프링 시큐리티(로그인)에서 4번 과정을 진행.(3번 과정을 건너뜀.)
+        - UserRepositroy.java에서 findByUsername()를 선언.
+        - PrincipalDetailsService.java 작성.
+
+6. 위 과정을 실행하고 로그인을 시도하면 사진 6번과 같이 404 에러가 뜨는 것을 볼 수 있다.
+    이것은 로그인 버튼을 누르고 이동하는 페이지의 주소가 잘못된 것으로 예측된다.
+
+    spring boot app을 종료했다가 다시 시도해보니 코드의 수정없이 로그인에 성공했다.(여러 번 시도를 하여 서버가 꼬였던 것 같다.)
+
+7. 사진 7번을 보면 해시 처리된 password를 가지고 로그인을 하여도 네비게이션바에 글쓰기, 회원정보, 로그아웃이 떠 있는 것을 볼 수 있다.
+
+8. 여기서 로그아웃을 클릭하면 시큐리티에 의해 자동으로 logout까지 구현된 것을 확인할 수 있다.(사진 8번)
+    (스프링 시큐리티에서는 /logout이 로그아웃 될 수 있도록 디폴트 값으로 들어가 있다.)
+
+9. 여기서 확일할 때는 header.jsp의 <sec:authorize access="isAuthenticated()">에 있는 isAuthenticated()에 접근하여 principal을 들고오면 스프링 시큐리티가 들고 있는 세션 정보에 접근이 가능하다.(사진 9번)
+    이 방식은 jsp에서 확인하는 것이고,
+
+    spring의 console창에서는 public String index(@AuthenticationPrincipal PrincipalDetail principal)를 사용하면 id를 받아올 수 있다.(사진 10, 11번)

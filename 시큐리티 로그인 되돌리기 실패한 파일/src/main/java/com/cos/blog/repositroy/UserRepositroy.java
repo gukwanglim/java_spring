@@ -15,7 +15,7 @@ public interface UserRepositroy extends JpaRepository<User, Integer> {
 	
 	// JPA Naming 쿼리
 	// SELECT * FROM user WHERE username = ?1 AND password = ?2; 와 같이 된다.
-//	User findByUsernameAndPassword(String username, String password);
+	// User findByUsernameAndPassword(String username, String password);
 	
 	// 또는 아래 방법으로 사용할 수 있다
 //	@Query(value = "SELECT * FROM user WHERE username = ?1 AND password = ?2", nativeQuery = true)

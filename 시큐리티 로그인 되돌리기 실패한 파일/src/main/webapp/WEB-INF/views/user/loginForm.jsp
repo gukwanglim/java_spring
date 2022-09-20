@@ -3,7 +3,7 @@
 
 <div class="container">
 
-	<form action="/auth/loginProc" method="post">
+	<form>
 
 		<div class="form-group">
 			<label for="username">Username :</label> 
@@ -24,7 +24,7 @@
 		<button id="btn-login" class="btn btn-primary">login</button>
 		
 	</form>
-	
+
 </div>
 
 <script src="/js/user.js"></script>

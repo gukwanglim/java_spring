@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 // 빈 등록 : 스프링 컨테이너에서 객체를 관리할 수 있게 하는 것
@@ -14,12 +13,6 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity   // 시큐리티 필터 등록 = 스프링 시큐리티가 활성화 되었는데 어떤 설정을 해당 파일에서 하겠다.
 @EnableGlobalMethodSecurity(prePostEnabled = true)  // 특정 주소로 접근을 하면 권한 및 인증을 미리 체크하겠다
 public class SecurityConfig {
-	
-	// 회원가입 시 password를 해쉬로 변경
-	@Bean  // 함수가 return 하는 값을 spring이 관리(IoC)
-	public BCryptPasswordEncoder encodePWD() {
-		return new BCryptPasswordEncoder();
-	}
 	
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -32,10 +25,10 @@ public class SecurityConfig {
 				.authenticated()         // 인증이 되어야 한다.
 			.and()
 				.formLogin()
-				.loginPage("/auth/loginForm")  // 인증이 필요하다면 이곳으로 간다.
-				.loginProcessingUrl("/auth/loginProc")  // 스프링 시큐리티가 해당 주소로 요청오는 login을 가로채서 대신 로그인해준다.
-				.defaultSuccessUrl("/");   // 스프링 시큐리티가 login을 끝내고 해당 주소로 이동
-//				.failureUrl("/fail");     // login이 실패하게 되면 해당 주소로 이동
+				.loginPage("/auth/loginForm");  // 인증이 필요하다면 이곳으로 간다.
+//				.loginProcessingUrl("/auth/loginProc")  // 스프링 시큐리티가 해당 주소로 요청오는 login을 가로채서 대신 로그인해준다.
+//				.defaultSuccessUrl("/");   // 스프링 시큐리티가 login을 끝내고 해당 주소로 이동
+  //				.failureUrl("/fail");     // login이 실패하게 되면 해당 주소로 이동
 				
 		return http.build();
 	}
