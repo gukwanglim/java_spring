@@ -28,7 +28,7 @@ spring:
                                                    # 만약, org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy로 사용하게 된다면 
                                                    # User 테이블에 myNmae 이라고 작성했을 경우, my_name으로 피드에 저장된다.
       use-new-id-generator-mappings: false
-    show-sql: true                             # console 창에 내용이 보이도록
+    #show-sql: true                             # console 창에 내용이 보이도록
     properties:                               # console 창에 보이는 내용을 한 줄이 아닌 보기 쉽도록 
       hibernate.format_sql: true
 
