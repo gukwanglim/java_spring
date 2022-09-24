@@ -4,6 +4,10 @@ let index = {
 			this.save();
 		});
 		
+		$("#btn-update").on("click", ()=> {
+			this.update();
+		});
+		
 		// 시큐리티를 사용하여 아래 방식의 login을 사용하지 않음
 //		$("#btn-login").on("click", ()=> {
 //			this.login();
@@ -29,6 +33,28 @@ let index = {
 		}).done(function(resp) {
 			alert("회원가입이 완료되었습니다.");
 			// console.log(resp);
+			location.href = "/";
+		}).fail(function(error) {
+			alert(JSON.stringify(error));
+		}); 
+	},
+	
+	update: function() {
+		let data = {
+			id: $("#id").val(),
+			username: $("#username").val(),
+			password: $("#password").val(),
+			email: $("#email").val()
+		};
+
+		$.ajax({
+			type: "PUT",
+			url: "/user",
+			data: JSON.stringify(data),
+			contentType: "application/json; charset=utf-8",
+			dataType: "json"
+		}).done(function(resp) {
+			alert("회원수정이 완료되었습니다.");
 			location.href = "/";
 		}).fail(function(error) {
 			alert(JSON.stringify(error));

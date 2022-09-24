@@ -33,7 +33,7 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)       // 프로젝트에서 연결된  DB의 넘버링 전략을 따라간다.
 	private int id;     // 시퀀스, auto_incrememt
 	
-	@Column(nullable = false, length = 30, unique = true)
+	@Column(nullable = false, length = 100, unique = true)
 	private String username;   // 아이디
 	
 	@Column(nullable = false, length = 100)  // 해쉬로 변경하여 암호화하기 위해
@@ -42,11 +42,14 @@ public class User {
 	@Column(nullable = false, length = 50)
 	private String email;
 	
+	@Column
+	private String oauth; // kakao, google 등으로 로그인 한 것을 분간
+    // null을 허용하여 일반 로그인의 경우는 그냥 진행하게 만들 수 있다.
+	
 //	@ColumnDefault("user")
 	@Enumerated(EnumType.STRING)
 	private RoleType role;    // Enum을 사용하는게 좋다(도메인을 사용하기 위해서) -> admin, user, manager를 분간할 수 있게 된다.
 	
 	@CreatedDate   // 시간이 자동으로 입력
 	private Timestamp createDate;
-	
 }
