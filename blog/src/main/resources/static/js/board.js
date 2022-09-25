@@ -12,6 +12,10 @@ let index = {
 			this.update();
 		});
 		
+		$("#btn-reply-save").on("click", ()=> {
+			this.replySave();
+		});
+		
 		// 시큐리티를 사용하여 아래 방식의 login을 사용하지 않음
 //		$("#btn-login").on("click", ()=> {
 //			this.login();
@@ -83,9 +87,36 @@ let index = {
 		}); 
 	},
 	
+	replySave: function() {
+
+		let data = {
+			// dto를 사용할 때
+			userId: $("#userId").val(),
+			boardId: $("#boardId").val(),
+			content: $("#reply-content").val()
+		};
+		
+		// console.log(data);
+		
+		// dto를 사용하지 않았을 때
+		//let boardId = $("#boardId").val();
+		
+		$.ajax({
+			type: "POST",
+			url: `/api/board/${data.boardId}/reply`,
+			data: JSON.stringify(data), 
+			contentType: "application/json; charset=utf-8",
+			dataType: "json" 
+		}).done(function(resp) {
+			alert("댓글 작성이 완료되었습니다.");
+			location.href = `/board/${data.boardId}`;
+		}).fail(function(error) {
+			alert(JSON.stringify(error));
+		}); 
+	},
+	
 	// 시큐리티를 사용하여 아래 방식의 login을 사용하지 않음
 //	login: function() {
-//		// alert("user의 save 함수 호출됨");
 //		let data = {
 //			username: $("#username").val(),
 //			password: $("#password").val(),
