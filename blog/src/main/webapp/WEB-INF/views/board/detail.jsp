@@ -2,6 +2,7 @@
 <%@ include file="../layout/header.jsp"%>
 
 <div class="container">
+	<h3>${reply.content}</h3>
 
 	<button class="btn" onclick="history.back()">돌아가기</button>
 	<c:if test="${board.user.id == principal.user.id}">
@@ -29,14 +30,15 @@
 
 	<div class="card">
 		<form>
-			<input type="hidden" id="userId" value="${principal.user.id}"/>
-			<input type="hidden" id="boardId" value="${board.id}" />
+			<input type="hidden" id="userId" value="${principal.user.id}" /> <input type="hidden" id="boardId" value="${board.id}" />
 			<div class="card-body">
 				<textarea id="reply-content" class="form-control" rows="1"></textarea>
 			</div>
+
 			<div class="card-footer">
 				<button type="button" id="btn-reply-save" class="btn">등록</button>
 			</div>
+
 		</form>
 	</div>
 	<br />
@@ -47,11 +49,13 @@
 		<ul id="reply--box" class="list-group">
 
 			<c:forEach var="reply" items="${board.reply}">
-				<li id="reply--1" class="list-group-item d-flex justify-content-between">
+				<li id="reply--${reply.id}" class="list-group-item d-flex justify-content-between">
 					<div>${reply.content}</div>
 					<div class="d-flex">
 						<div class="font-italic">작성자 : ${reply.user.username} &nbsp</div>
-						<button class="btn badge">삭제</button>
+						<c:if test="${reply.user.id == principal.user.id}">
+							<button onclick="index.replyDelete(${board.id}, ${reply.id})" class="btn badge">삭제</button>
+						</c:if>
 					</div>
 				</li>
 			</c:forEach>

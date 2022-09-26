@@ -115,6 +115,19 @@ let index = {
 		}); 
 	},
 	
+	replyDelete: function(boardId, replyId) {
+		$.ajax({
+			type: "DELETE",
+			url: `/api/board/${boardId}/reply/${replyId}`,
+			dataType: "json" 
+		}).done(function(resp) {
+			alert("댓글을 삭제하였습니다.");
+			location.href = `/board/${boardId}`;
+		}).fail(function(error) {
+			alert(JSON.stringify(error));
+		}); 
+	},
+	
 	// 시큐리티를 사용하여 아래 방식의 login을 사용하지 않음
 //	login: function() {
 //		let data = {

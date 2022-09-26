@@ -43,11 +43,19 @@ public class Reply {
 	@CreatedDate
 	private Timestamp createDate;
 
+	@Override
+	public String toString() {
+		return "Reply [id=" + id + ", content=" + content + ", board=" + board + ", user=" + user + ", createDate="
+				+ createDate + "]";
+	}
+
 	// BoardService.java의 댓글쓰기()에서 .builder()를 사용하지 않는 방법
 //	public void update(User user, Board board, String content) {
 //		setUser(user);
 //		setBoard(board);
 //		setContent(content);
 //	}
+	
+	
 
 }

@@ -35,7 +35,8 @@ let index = {
 			// console.log(resp);
 			location.href = "/";
 		}).fail(function(error) {
-			alert(JSON.stringify(error));
+			//alert(JSON.stringify(error));
+			alert("회원가입에 실패하였습니다.");
 		}); 
 	},
 	
