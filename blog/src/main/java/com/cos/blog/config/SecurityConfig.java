@@ -28,7 +28,7 @@ public class SecurityConfig {
 		http
 			.csrf().disable()  // csrf 토큰 비활성화(테스트 시 걸어두는게 좋음)
 			.authorizeRequests()          // request가 들어오면
-				.antMatchers("/", "/auth/**", "/js/**", "/css/**", "/image/**")  // 그것이 /auth/**의 경로를 가지고 있을 경우
+				.antMatchers("/", "/auth/**", "/js/**", "/css/**", "/image/**", "/board/**")  // 그것이 /auth/**의 경로를 가지고 있을 경우
 				.permitAll()              // 접근을 허용한다.
 				.anyRequest()             // 이것이 아닌 다른 요청은
 				.authenticated()         // 인증이 되어야 한다.

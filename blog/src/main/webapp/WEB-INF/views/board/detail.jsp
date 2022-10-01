@@ -2,12 +2,11 @@
 <%@ include file="../layout/header.jsp"%>
 
 <div class="container">
-	<h3>${reply.content}</h3>
 
 	<button class="btn" onclick="history.back()">돌아가기</button>
 	<c:if test="${board.user.id == principal.user.id}">
 		<a href="/board/${board.id}/updateForm" class="btn ">수정</a>
-		<button id="btn-delete" class="btn">삭제</button>
+		<!-- <button id="btn-delete" class="btn">삭제</button> -->
 	</c:if>
 	<br /> <br />
 
@@ -28,6 +27,7 @@
 	</div>
 	<hr />
 
+	<c:if test="${principal.user.id != null}">
 	<div class="card">
 		<form>
 			<input type="hidden" id="userId" value="${principal.user.id}" /> <input type="hidden" id="boardId" value="${board.id}" />
@@ -38,9 +38,9 @@
 			<div class="card-footer">
 				<button type="button" id="btn-reply-save" class="btn">등록</button>
 			</div>
-
 		</form>
 	</div>
+	</c:if>
 	<br />
 
 	<div class="card">
