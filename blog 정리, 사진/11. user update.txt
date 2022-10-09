@@ -3,7 +3,7 @@
         (사진 1번을 보면 @PutMapping("/dummy/user/{id}")와 @GetMapping("/dummy/user/{id}")의 주소가 겹치는 것처럼 보일 수 있는데 Get과 Put 호출으로 에러가 발생하지 않는다.)
 
     사진 1번의 코드를 보면 @RequestBody User requestUser를 사용했다.
-        이것은 이전에 user table의 데이터를 받아올 때, 사용했던 User user의 방식이 아닌 json 형식의 데이터를 받아오는 것으로 @RequestBody 어노테이션을 사용한다.
+        이것은 이전에 user table의 데이터를 받아올 때 사용했던 User user의 방식이 아닌 json 형식의 데이터를 받아오는 것으로 @RequestBody 어노테이션을 사용한다.
         (User user를 사용하면 폼태그(x-www-form-urlencoded)의 형식으로 받아오는 것이고, @RequestBody를 사용하면 raw의 json 형식으로 받아오는 것이다.)
 
     데이터 베이스에 적힌 정보를 수정하기 전에 1번 id에 저장된 값을 확인하면 사진 2번과 같다.
